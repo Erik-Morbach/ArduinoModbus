@@ -48,7 +48,7 @@ int ModbusRTUServerClass::begin(int id, unsigned long baudrate,void *serialType,
   return 1;
 }
 
-void ModbusRTUServerClass::poll()
+void ModbusRTUServerClass::poll(void *resetVar, int nb)
 {
   uint8_t request[MODBUS_RTU_MAX_ADU_LENGTH];
 
@@ -56,7 +56,12 @@ void ModbusRTUServerClass::poll()
 
   if (requestLength > 0) {
     modbus_reply(_mb, request, requestLength, &_mbMapping);
+    if(resetVar)
+        memset(resetVar,0,nb);
   }
+}
+void ModbusRTUServerClass::poll(){
+    this->poll(NULL,0);
 }
 
 ModbusRTUServerClass ModbusRTUServer;

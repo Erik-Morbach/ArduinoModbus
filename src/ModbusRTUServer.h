@@ -42,6 +42,7 @@ public:
   /**
    * Poll interface for requests
    */
+  virtual void poll(void *resetVar=NULL, int nb=0);
   virtual void poll();
 };
 
